@@ -16,6 +16,7 @@ export default class ImageUpload extends React.Component {
     photo: null,
     name: 'name',
     data: [],
+    
   };
 
   componentDidMount() {
