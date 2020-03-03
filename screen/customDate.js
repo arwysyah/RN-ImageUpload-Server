@@ -22,10 +22,14 @@ export default class CustomDate extends Component {
 
   onChangeDate(date) {
     alert(date);
-    this.setState({
-      data: [...this.state.data, date],
-    });
-    console.log(this.state.data, 'date');
+    if (this.state.data.includes(date)) {
+      alert('alaready');
+    } else {
+      this.setState({
+        data: [...this.state.data, date],
+      });
+      console.log(this.state.data, 'date');
+    }
   }
 
   renderChildDay(day) {
@@ -41,8 +45,14 @@ export default class CustomDate extends Component {
         />
       );
     }
-   
   }
+  handleBooking = () => {
+    if (this.state.data.length < 5) {
+      alert('masih kurang cuy');
+    } else {
+      alert('succes book');
+    }
+  };
   handleDelete = async e => {
     console.log('ggg');
     let array = [...this.state.data];
@@ -51,27 +61,45 @@ export default class CustomDate extends Component {
     array.splice(index, 1);
     this.setState({data: array});
   };
+
   render() {
-    
     console.log(this.state.data, 'da');
     return (
       <View style={styles.container}>
-        <DateTime
-          date={this.state.time}
-          changeDate={date => this.onChangeDate(date)}
-          format="YYYY-MM-DD"
-          renderChildDay={day => this.renderChildDay(day)}
-        />
+        <View>
+          <DateTime
+            date={this.state.time}
+            changeDate={date => this.onChangeDate(date)}
+            format="YYYY-MM-DD"
+            renderChildDay={day => this.renderChildDay(day)}
+          />
 
-     
           {this.state.data.map((d, i) => {
             return (
-              <View style={{height:20,flexDirection:"row"}}>
+              <View style={{height: 20, flexDirection: 'row'}}>
                 <Text>{d}</Text>
-                <TouchableOpacity onPress={(e)=>{this.handleDelete(e)}}><Text>Delete</Text></TouchableOpacity>
-             </View>
+                <TouchableOpacity
+                  onPress={e => {
+                    this.handleDelete(e);
+                  }}>
+                  <Text>Delete</Text>
+                </TouchableOpacity>
+                <View>
+          <View style={{top: 30,alignItems:'center'}}>
+            <TouchableOpacity
+            // title='jello'
+              onPress={() => {
+                this.handleBooking();
+              }}>
+                <Text>hellllo</Text>
+              </TouchableOpacity>
+           
+          </View>
+        </View>
+              </View>
             );
           })}
+        </View>
         
       </View>
     );
